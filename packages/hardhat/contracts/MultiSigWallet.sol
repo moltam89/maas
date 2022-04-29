@@ -89,7 +89,7 @@ contract MultiSigWallet {
       } else {
         owners.pop();
         for (uint256 j = i; j < ownersLength - 1; j++) {
-          owners.push(poppedOwners[j]);
+          owners.push(poppedOwners[j + 1]);
         }
         return;
       }
