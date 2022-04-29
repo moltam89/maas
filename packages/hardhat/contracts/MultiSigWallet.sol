@@ -102,7 +102,6 @@ contract MultiSigWallet {
 
   function executeTransaction( address payable to, uint256 value, bytes memory data, bytes[] memory signatures)
       public
-      onlyOwner
       returns (bytes memory)
   {
     bytes32 _hash =  getTransactionHash(nonce, to, value, data);
