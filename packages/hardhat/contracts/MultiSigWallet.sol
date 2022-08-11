@@ -48,10 +48,6 @@ contract MultiSigWallet {
         require(signaturesRequired > 0, "Must be non-zero signatures required");
         require(owners.length >= signaturesRequired, "Must be at least the same amount of signers than signatures required");
     }
-    modifier onlyFactory() {
-        require(msg.sender == address(multiSigFactory));
-        _;
-    }
 
     // constructor(
     //     uint256 _chainId,
@@ -78,16 +74,16 @@ contract MultiSigWallet {
     //     name = _name;
     // }
 
-    constructor(string memory _name, address _factory) payable {
-        name = _name;
-        multiSigFactory = MultiSigFactory(_factory);
-    }
-
-    function init(
+    constructor(
+        string memory _name,
+        address _factory,
         uint256 _chainId,
         address[] memory _owners,
-        uint256 _signaturesRequired
-    ) public payable onlyFactory onlyValidSignaturesRequired {
+        uint256 _signaturesRequired)
+    payable onlyValidSignaturesRequired {
+        name = _name;
+        multiSigFactory = MultiSigFactory(_factory);
+
         signaturesRequired = _signaturesRequired;
         for (uint256 i = 0; i < _owners.length; i++) {
             address owner = _owners[i];

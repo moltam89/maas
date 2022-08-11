@@ -117,17 +117,12 @@ contract MultiSigFactory {
                 _salt,
                 abi.encodePacked(
                     type(MultiSigWallet).creationCode,
-                    abi.encode(_name, address(this))
+                    abi.encode(_name, address(this), _chainId, _owners, _signaturesRequired)
                 )
             )
         );
 
         MultiSigWallet multiSig = MultiSigWallet(payable(multiSig_address));
-
-        /**----------------------
-         * init remaining values
-         * ---------------------*/
-        multiSig.init(_chainId, _owners, _signaturesRequired);
 
         multiSigs.push(multiSig);
         existsMultiSig[address(multiSig_address)] = true;
