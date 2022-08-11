@@ -211,7 +211,7 @@ describe("MultiSigWallet Test", () => {
     it("Transaction reverted: Invalid MultiSigWallet, more signatures required than signers", async () => {
       await expect(
           MultiSigFactory.create2(CHAIN_ID, [owner.address], 2, SALT, CONTRACT_NAME + "Some random string so the names won't collide?")
-        ).to.be.revertedWith("Must be at least the same amount of signers than signatures required");
+        ).to.be.revertedWith("Create2: Failed on deploy");
     });
 
     it("Transaction reverted: Update Signatures Required to 2 - trying to lock all the funds in the wallet, becasuse there is only 1 signer", async () => {
