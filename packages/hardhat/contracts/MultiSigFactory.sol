@@ -141,7 +141,13 @@ contract MultiSigFactory {
     /**----------------------
      * get a computed address
      * ---------------------*/
-    function computedAddress(bytes32 _salt, string memory _name)
+    function computedAddress(
+        uint256 _chainId,
+        address[] memory _owners,
+        uint256 _signaturesRequired,
+        bytes32 _salt,
+        string memory _name
+    )
         public
         view
         returns (address)
@@ -149,7 +155,7 @@ contract MultiSigFactory {
         bytes32 bytecodeHash = keccak256(
             abi.encodePacked(
                 type(MultiSigWallet).creationCode,
-                abi.encode(_name, address(this))
+                abi.encode(_name, address(this), _chainId, _owners, _signaturesRequired)
             )
         );
         address computed_address = Create2.computeAddress(_salt, bytecodeHash);
