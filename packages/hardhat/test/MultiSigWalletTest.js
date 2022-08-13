@@ -131,7 +131,7 @@ describe("MultiSigWallet Test", () => {
         getRemoveSignerCallData(removeSignerAddress, newSignaturesRequired - 1), 
         await getSignaturesArray(removeSignerHash));
 
-      // 90331
+      // 90273
       console.log("gas", gas, gas.toString());
 
       await MultiSigWallet.executeTransaction(

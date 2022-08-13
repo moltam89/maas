@@ -146,16 +146,22 @@ contract MultiSigWallet {
         isOwner[_oldSigner] = false;
         uint256 ownersLength = owners.length;
         address[] memory poppedOwners = new address[](owners.length);
-        for (uint256 i = ownersLength - 1; i >= 0; i--) {
+        for (uint256 i = ownersLength - 1; i >= 0;) {
             if (owners[i] != _oldSigner) {
                 poppedOwners[i] = owners[i];
                 owners.pop();
             } else {
                 owners.pop();
-                for (uint256 j = i; j < ownersLength - 1; j++) {
+                for (uint256 j = i; j < ownersLength - 1;) {
                     owners.push(poppedOwners[j + 1]); // shout out to moltam89!! https://github.com/austintgriffith/maas/pull/2/commits/e981c5fa5b4d25a1f0946471b876f9a002a9a82b
+                    unchecked {
+                        ++ j;
+                    }
                 }
                 return;
+            }
+            unchecked {
+                -- i;
             }
         }
     }
