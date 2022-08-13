@@ -126,6 +126,14 @@ describe("MultiSigWallet Test", () => {
 
       let removeSignerHash = await getRemoveSignerHash(removeSignerAddress, newSignaturesRequired - 1);
 
+      const gas = await MultiSigWallet.estimateGas.executeTransaction(
+        MultiSigWallet.address, "0x0",
+        getRemoveSignerCallData(removeSignerAddress, newSignaturesRequired - 1), 
+        await getSignaturesArray(removeSignerHash));
+
+      // 90331
+      console.log("gas", gas, gas.toString());
+
       await MultiSigWallet.executeTransaction(
         MultiSigWallet.address, "0x0",
         getRemoveSignerCallData(removeSignerAddress, newSignaturesRequired - 1), 
